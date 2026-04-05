@@ -7,11 +7,12 @@ const AppContext = createContext<ReturnType<typeof useTripStore> | null>(null);
 
 export function AppProvider({ children }: PropsWithChildren) {
   const store = useTripStore();
+  const { setPermissionState } = store;
 
   useEffect(() => {
     initializeDatabase();
-    readPermissionState().then(store.setPermissionState).catch(() => undefined);
-  }, [store]);
+    readPermissionState().then(setPermissionState).catch(() => undefined);
+  }, [setPermissionState]);
 
   return <AppContext.Provider value={store}>{children}</AppContext.Provider>;
 }
